@@ -1,5 +1,3 @@
-from typing import List
-
 from homeassistant.components.climate import ClimateEntity, HVACMode, HVACAction, ClimateEntityFeature, \
     ATTR_TEMPERATURE, FAN_OFF, FAN_LOW, FAN_MEDIUM, FAN_HIGH, FAN_AUTO, PRESET_COMFORT, PRESET_AWAY, PRESET_ECO, \
     PRESET_HOME, PRESET_SLEEP
@@ -7,11 +5,11 @@ from homeassistant.const import UnitOfTemperature
 
 from ..const import DOMAIN, BRAND
 from ..nhccoco.const import PROPERTY_PROGRAM_VALUE_DAY, PROPERTY_PROGRAM_VALUE_ECO, PROPERTY_PROGRAM_VALUE_NIGHT, \
-    PROPERTY_PROGRAM_VALUE_AWAY, PROPERTY_PROGRAM_VALUE_HOME, PROPERTY_STATUS_VALUE_OFF, PROPERTY_STATUS_VALUE_ON, \
+    PROPERTY_PROGRAM_VALUE_AWAY, PROPERTY_PROGRAM_VALUE_HOME, PROPERTY_STATUS_VALUE_OFF, \
     PROPERTY_OPERATION_MODE_VALUE_HEAT, PROPERTY_OPERATION_MODE_VALUE_COOL, PROPERTY_OPERATION_MODE_VALUE_AUTO, \
-    PROPERTY_FAN_SPEED_VALUE_OFF, PROPERTY_FAN_SPEED_VALUE_LOW, PROPERTY_FAN_SPEED_VALUE_MEDIUM, \
-    PROPERTY_FAN_SPEED_VALUE_HIGH, PROPERTY_FAN_SPEED_VALUE_AUTO, PROPERTY_OPERATION_MODE_VALUE_DRY, \
-    PROPERTY_OPERATION_MODE_VALUE_FAN
+    PROPERTY_OPERATION_MODE_VALUE_DRY, PROPERTY_OPERATION_MODE_VALUE_FAN, PROPERTY_FAN_SPEED_VALUE_OFF, \
+    PROPERTY_FAN_SPEED_VALUE_LOW, PROPERTY_FAN_SPEED_VALUE_MEDIUM, PROPERTY_FAN_SPEED_VALUE_HIGH, \
+    PROPERTY_FAN_SPEED_VALUE_AUTO
 from ..nhccoco.devices.generic_hvac import CocoGenericHvac
 
 
@@ -47,12 +45,11 @@ class Nhc2GenericHvacClimateEntity(ClimateEntity):
             FAN_AUTO
         ]
 
-    def _sanitize_hvac_modes(self) -> List[str]:
-        """Some HVAC modes returned aren't exactly what HA expects, so attempt to convert them.
-           Only tested with modes returned from a Daikin unit (so far)"""
+    def _sanitize_hvac_modes(self) -> list:
+        """Some HVAC modes returned aren't exactly what HA expects, so attempt to convert them."""
         possible_modes = self._device.possible_operation_modes
 
-        # If we didn't get any possible modes, return a default set like previous versions used
+        # If we didn't get any possible modes, return a default set
         if not possible_modes:
             return [
                 HVACMode.AUTO,
@@ -60,7 +57,7 @@ class Nhc2GenericHvacClimateEntity(ClimateEntity):
                 HVACMode.OFF
             ]
 
-        # Otherwise, attempt to map these into known HA modes
+        # Attempt to map these into known HA modes
         mode_mappings = {
             'Fan': HVACMode.FAN_ONLY,
             'Heat': HVACMode.HEAT,
@@ -75,6 +72,7 @@ class Nhc2GenericHvacClimateEntity(ClimateEntity):
         # Ensure we can always turn it off
         if HVACMode.OFF not in output_values:
             output_values.append(HVACMode.OFF)
+
         return output_values
 
     @property
@@ -157,7 +155,7 @@ class Nhc2GenericHvacClimateEntity(ClimateEntity):
         return self._device.program
 
     @property
-    def preset_modes(self) -> List[str]:
+    def preset_modes(self) -> list:
         modes = []
         for program in self._device.possible_programs:
             if program == PROPERTY_PROGRAM_VALUE_ECO:
