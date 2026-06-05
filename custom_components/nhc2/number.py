@@ -5,7 +5,6 @@ from homeassistant.const import CONF_USERNAME
 
 from .nhccoco.coco import CoCo
 
-from .entities.generic_chargingstation_reachable_distance import Nhc2GenericChargingstationReachableDistanceEntity
 from .entities.generic_chargingstation_target_distance import Nhc2GenericChargingstationTargetDistanceEntity
 from .entities.generic_domestichotwaterunit_domestic_hot_water_temperature import \
     Nhc2GenericDomestichotwaterunitDomesticHotWaterTemperatureEntity
