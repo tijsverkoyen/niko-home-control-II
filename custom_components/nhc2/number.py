@@ -45,7 +45,5 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         for device_instance in device_instances:
             if device_instance.supports_target_distance:
                 entities.append(Nhc2GenericChargingstationTargetDistanceEntity(device_instance, hub, gateway))
-            if device_instance.supports_reachable_distance:
-                entities.append(Nhc2GenericChargingstationReachableDistanceEntity(device_instance, hub, gateway))
 
         async_add_entities(entities)
