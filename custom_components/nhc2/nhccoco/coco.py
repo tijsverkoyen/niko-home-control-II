@@ -361,11 +361,14 @@ class CoCo:
                     'CocoChimeRelay',
                     'CocoDalicolorRgbw',
                     'CocoDalidimmerDimmer',
+                    'CocoDalidimmergroupDimmer',
                     'CocoDalitunablewhiteandcolorRgbw',
                     'CocoDalitunablewhiteRgbw',
                     'CocoDigitalsensorDigitalsensor',
                     'CocoDimcontrollerSmartpanel',
+                    'CocoDimcontrollerfeedbackPanel',
                     'CocoDimcontrollerfeedbackSmartpanel',
+                    'CocoDimcontrollerx2FeedbackPanel',
                     'CocoDimcontrollerx2Panel',
                     'CocoDimmerDimmer',
                     'CocoDimmerSmartdimmer',
@@ -381,6 +384,7 @@ class CoCo:
                     'CocoGenericBrick',
                     'CocoGenericChargingstation',
                     'CocoGenericGatewayfw',
+                    'CocoGenericHybridinverter',
                     'CocoGenericLightsensor',
                     'CocoGenericRadio',
                     'CocoGenericStick',
@@ -433,6 +437,12 @@ class CoCo:
                     'CocoZonevalveHvac'
                 ]:
                     _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname}")
+                    continue
+
+                if (not device.get(MQTT_DATA_PARAMS_DEVICES_PROPERTIES) and classname in [
+                    'CocoGenericFan'
+                ]):
+                    _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname} - no properties")
                     continue
 
                 instance = getattr(sys.modules[__name__], classname)(json_to_map(device))
