@@ -119,10 +119,6 @@ class CocoGenericChargingstation(CoCoDevice):
         return self.has_property(PROPERTY_REACHABLE_DISTANCE)
 
     @property
-    def reachable_distance_range(self) -> tuple[float, float, float]:
-        return self.extract_property_definition_description_range(PROPERTY_REACHABLE_DISTANCE)
-
-    @property
     def target_reached(self) -> str | None:
         return self.extract_property_value(PROPERTY_TARGET_REACHED)
 
