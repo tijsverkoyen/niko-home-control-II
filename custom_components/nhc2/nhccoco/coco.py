@@ -439,6 +439,12 @@ class CoCo:
                     _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname}")
                     continue
 
+                if (not device.get('Properties') and classname in [
+                    'CocoGenericFan'
+                ]):
+                    _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname} - no properties")
+                    continue
+
                 instance = getattr(sys.modules[__name__], classname)(json_to_map(device))
                 self._device_instances[instance.uuid] = instance
                 _LOGGER.debug(f"Added device {instance.uuid} of class {classname}")
