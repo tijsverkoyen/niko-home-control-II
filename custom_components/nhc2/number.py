@@ -5,7 +5,6 @@ from homeassistant.const import CONF_USERNAME
 
 from .nhccoco.coco import CoCo
 
-from .entities.generic_chargingstation_reachable_distance import Nhc2GenericChargingstationReachableDistanceEntity
 from .entities.generic_chargingstation_target_distance import Nhc2GenericChargingstationTargetDistanceEntity
 from .entities.generic_domestichotwaterunit_domestic_hot_water_temperature import \
     Nhc2GenericDomestichotwaterunitDomesticHotWaterTemperatureEntity
@@ -45,7 +44,5 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         for device_instance in device_instances:
             if device_instance.supports_target_distance:
                 entities.append(Nhc2GenericChargingstationTargetDistanceEntity(device_instance, hub, gateway))
-            if device_instance.supports_reachable_distance:
-                entities.append(Nhc2GenericChargingstationReachableDistanceEntity(device_instance, hub, gateway))
 
         async_add_entities(entities)

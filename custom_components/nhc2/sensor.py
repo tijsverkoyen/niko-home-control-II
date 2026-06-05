@@ -30,6 +30,7 @@ from .entities.generic_chargingstation_coupling_status import Nhc2GenericChargin
 from .entities.generic_chargingstation_electrical_power import Nhc2GenericChargingstationElectricalPowerEntity
 from .entities.generic_chargingstation_ev_status import Nhc2GenericChargingstationEvStatusEntity
 from .entities.generic_chargingstation_next_charging_time import Nhc2GenericChargingstationNextChargingTimeEntity
+from .entities.generic_chargingstation_reachable_distance import Nhc2GenericChargingstationReachableDistanceEntity
 from .entities.generic_domestichotwaterunit_coupling_status import Nhc2GenericDomestichotwaterunitCouplingStatusEntity
 from .entities.generic_energyhome_electrical_power_consumption import \
     Nhc2GenericEnergyhomeElectricalPowerConsumptionEntity
@@ -437,6 +438,8 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                 entities.append(Nhc2GenericChargingstationChargingStatusEntity(device_instance, hub, gateway))
             if device_instance.supports_next_charging_time:
                 entities.append(Nhc2GenericChargingstationNextChargingTimeEntity(device_instance, hub, gateway))
+            if device_instance.supports_reachable_distance:
+                entities.append(Nhc2GenericChargingstationReachableDistanceEntity(device_instance, hub, gateway))
 
         async_add_entities(entities)
 
