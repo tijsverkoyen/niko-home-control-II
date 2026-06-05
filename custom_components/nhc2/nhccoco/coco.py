@@ -439,7 +439,7 @@ class CoCo:
                     _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname}")
                     continue
 
-                if (not device.get('Properties') and classname in [
+                if (not device.get(MQTT_DATA_PARAMS_DEVICES_PROPERTIES) and classname in [
                     'CocoGenericFan'
                 ]):
                     _LOGGER.debug(f"Skipping {device[MQTT_DATA_PARAMS_DEVICES_UUID]} of {classname} - no properties")
